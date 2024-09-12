@@ -1,0 +1,23 @@
+{
+  "name": "add-exif-data-to-image",
+  "version": "1.0.0",
+  "description": "A Node.js module for storing arbitrary metadata in images files",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard --fix && node --test test/*.test.js",
+    "lint": "standard --fix"
+  },
+  "repository": "https://github.com/zeke/add-exif-data-to-image",
+  "keywords": [
+    "exif"
+  ],
+  "author": "Zeke Sikelianos <zeke@sikelianos.com> (http://zeke.sikelianos.com/)",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "exiftool-vendored": "^28.2.1"
+  },
+  "devDependencies": {
+    "standard": "^17.1.1"
+  }
+}
