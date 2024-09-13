@@ -7,8 +7,10 @@ export async function addDataToImage (metadata, fullyQualifiedImagePath) {
 
     await exiftool.write(fullyQualifiedImagePath, {
       UserComment: json
-    })
+    }, ['-overwrite_original_in_place'])
   } catch (exifError) {
     console.error('Error writing EXIF data:', exifError)
+  } finally {
+    await exiftool.end()
   }
 }
