@@ -31,5 +31,7 @@ test('addDataToImage adds EXIF data to the image', async (t) => {
   } catch (error) {
     console.error('Error reading EXIF data:', error)
     throw error
+  } finally {
+    await exiftool.end()
   }
 })
