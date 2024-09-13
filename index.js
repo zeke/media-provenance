@@ -14,3 +14,19 @@ export async function addDataToImage (metadata, fullyQualifiedImagePath) {
     await exiftool.end()
   }
 }
+
+export async function readDataFromImage (fullyQualifiedImagePath) {
+  const exiftool = new ExifTool()
+  try {
+    const exifData = await exiftool.read(fullyQualifiedImagePath)
+    if (exifData.UserComment) {
+      return JSON.parse(exifData.UserComment)
+    }
+    return null
+  } catch (exifError) {
+    console.error('Error reading EXIF data:', exifError)
+    return null
+  } finally {
+    await exiftool.end()
+  }
+}
