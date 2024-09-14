@@ -56,7 +56,11 @@ const filePath = 'path/to/my/image.jpg'
 const data = await readDataFromImage(filePath)
 ```
 
+## Notes
 
+- Data is stored using EXIF, a popular image format metadata format.
+- Data is stored as a JSON string in the `UserComment` field.
+- This package doesn't provide raw access to EXIF data. If you need to read and write raw EXIF data, you can use the [`exiftool`](https://exiftool.org/) command line tool or the [exiftool-vendored](https://github.com/photostructure/exiftool-vendored) npm package.
 
 
 
