@@ -25,7 +25,7 @@ test('write and read metadata for PNG files', async (t) => {
   const metadata = JSON.parse(await fs.readFile(path.join(testDirectory, 'fixtures', 'example.json'), 'utf-8'))
 
   // Run the function
-  await addDataToImage(metadata, testImagePath)
+  await addDataToImage(testImagePath, metadata)
 
   // Verify the EXIF data
   const readMetadata = await readDataFromImage(testImagePath)
@@ -53,7 +53,7 @@ test('write and read metadata for WebP files', async (t) => {
   const metadata = JSON.parse(await fs.readFile(path.join(testDirectory, 'fixtures', 'example.json'), 'utf-8'))
 
   // Run the function
-  await addDataToImage(metadata, testImagePath)
+  await addDataToImage(testImagePath, metadata)
 
   // Verify the EXIF data
   const readMetadata = await readDataFromImage(testImagePath)
@@ -81,7 +81,7 @@ test('write and read metadata for JPG files', async (t) => {
   const metadata = JSON.parse(await fs.readFile(path.join(testDirectory, 'fixtures', 'example.json'), 'utf-8'))
 
   // Run the function
-  await addDataToImage(metadata, testImagePath)
+  await addDataToImage(testImagePath, metadata)
 
   // Verify the EXIF data
   const readMetadata = await readDataFromImage(testImagePath)

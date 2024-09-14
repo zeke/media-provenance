@@ -1,5 +1,5 @@
 {
-  "name": "add-exif-data-to-image",
+  "name": "exif-stash",
   "version": "1.0.0",
   "description": "A Node.js module for storing arbitrary metadata in images files",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "standard --fix && node --test test/*.test.js",
     "lint": "standard --fix"
   },
-  "repository": "https://github.com/zeke/add-exif-data-to-image",
+  "repository": "https://github.com/zeke/exif-stash",
   "keywords": [
     "exif"
   ],
