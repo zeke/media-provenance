@@ -2,7 +2,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { addDataToImage, readDataFromImage } from '../index.js'
+import MediaProvenance from '../index.js'
 
 async function runImageTest (t, testImageName) {
   const testDirectory = path.dirname(new URL(import.meta.url).pathname)
@@ -24,14 +24,14 @@ async function runImageTest (t, testImageName) {
   const metadata = JSON.parse(await fs.readFile(path.join(testDirectory, 'fixtures', 'example.json'), 'utf-8'))
 
   // Verify that the image does not include metadata before adding it
-  const initialMetadata = await readDataFromImage(testImagePath)
+  const initialMetadata = await MediaProvenance.get(testImagePath)
   assert.deepStrictEqual(initialMetadata, null, 'Image should not contain metadata initially')
 
   // Run the function to add metadata
-  await addDataToImage(testImagePath, metadata)
+  await MediaProvenance.set(testImagePath, metadata)
 
   // Verify the EXIF data after adding metadata
-  const readMetadata = await readDataFromImage(testImagePath)
+  const readMetadata = await MediaProvenance.get(testImagePath)
   assert.deepStrictEqual(readMetadata, metadata, 'Added metadata should match the original metadata')
 }
 

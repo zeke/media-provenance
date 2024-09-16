@@ -1,20 +1,26 @@
-# EXIF Stash
+# MediaProvenance
 
-A simple Node.js module for storing (and retrieving) JSON metadata in image files.
+A Node.js module for storing (and retrieving) JSON metadata in image files.
 
 Supports PNG, JPG, and WebP image formats.
+
+## Why?
+
+Ever come across an AI-generated image and wondered about its origins?
+
+MediaProvenance is a simple way to store and retrieve metadata in image files, so creators can share the origins of their images with others.
 
 ## Installation
 
 You'll need [Node.js](https://nodejs.org/en/download/prebuilt-installer) 18 or later to use this module.
 
 ```
-npm install exif-stash
+npm install media-provenance
 ```
 
 ## API
 
-### `addDataToImage(imagePath, metadata)`
+### `set(imagePath, metadata)`
 
 Add metadata to an image file.
 
@@ -26,7 +32,7 @@ Returns nothing.
 Example:
 
 ```js
-import { addDataToImage } from 'exif-stash'
+import MediaProvenance from 'media-provenance'
 
 const filePath = 'path/to/my/image.jpg'
 const data = {
@@ -35,11 +41,11 @@ const data = {
   "tags": ["test", "image"]
 }
 
-await addDataToImage(filePath, data)
+await MediaProvenance.set(filePath, data)
 ```
 
 
-### `readDataFromImage(imagePath)`
+### `get(imagePath)`
 
 Read metadata from an image file.
 
@@ -50,10 +56,10 @@ Returns a JSON object containing the metadata.
 Example:
 
 ```js
-import { readDataFromImage } from 'exif-stash'
+import MediaProvenance from 'media-provenance'
 
 const filePath = 'path/to/my/image.jpg'
-const data = await readDataFromImage(filePath)
+const data = await MediaProvenance.get(filePath)
 ```
 
 ## Notes

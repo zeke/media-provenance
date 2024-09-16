@@ -1,6 +1,11 @@
 import { ExifTool } from 'exiftool-vendored'
 
-export async function addDataToImage (fullyQualifiedImagePath, metadata) {
+export default {
+  get,
+  set
+}
+
+export async function set (fullyQualifiedImagePath, metadata) {
   const exiftool = new ExifTool()
   try {
     const json = JSON.stringify(metadata, null, 2)
@@ -15,7 +20,7 @@ export async function addDataToImage (fullyQualifiedImagePath, metadata) {
   }
 }
 
-export async function readDataFromImage (fullyQualifiedImagePath) {
+export async function get (fullyQualifiedImagePath) {
   const exiftool = new ExifTool()
   try {
     const exifData = await exiftool.read(fullyQualifiedImagePath)
