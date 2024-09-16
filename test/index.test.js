@@ -4,8 +4,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { addDataToImage, readDataFromImage } from '../index.js'
 
-test('write and read metadata for PNG files', async (t) => {
-  const testImageName = 'example.png'
+async function runImageTest (t, testImageName) {
   const testDirectory = path.dirname(new URL(import.meta.url).pathname)
   const sourceImagePath = path.join(testDirectory, 'fixtures', testImageName)
   const testImagePath = path.join(testDirectory, `test_${testImageName}`)
@@ -24,66 +23,26 @@ test('write and read metadata for PNG files', async (t) => {
   // Test metadata
   const metadata = JSON.parse(await fs.readFile(path.join(testDirectory, 'fixtures', 'example.json'), 'utf-8'))
 
-  // Run the function
+  // Verify that the image does not include metadata before adding it
+  const initialMetadata = await readDataFromImage(testImagePath)
+  assert.deepStrictEqual(initialMetadata, null, 'Image should not contain metadata initially')
+
+  // Run the function to add metadata
   await addDataToImage(testImagePath, metadata)
 
-  // Verify the EXIF data
+  // Verify the EXIF data after adding metadata
   const readMetadata = await readDataFromImage(testImagePath)
-  assert.deepStrictEqual(readMetadata, metadata)
+  assert.deepStrictEqual(readMetadata, metadata, 'Added metadata should match the original metadata')
+}
+
+test('write and read metadata for PNG files', async (t) => {
+  await runImageTest(t, 'example.png')
 })
 
 test('write and read metadata for WebP files', async (t) => {
-  const testImageName = 'example.webp'
-  const testDirectory = path.dirname(new URL(import.meta.url).pathname)
-  const sourceImagePath = path.join(testDirectory, 'fixtures', testImageName)
-  const testImagePath = path.join(testDirectory, `test_${testImageName}`)
-
-  await fs.copyFile(sourceImagePath, testImagePath)
-
-  // Cleanup after the test
-  t.after(async () => {
-    try {
-      await fs.unlink(testImagePath)
-    } catch (deleteError) {
-      console.error('Error deleting test image:', deleteError)
-    }
-  })
-
-  // Test metadata
-  const metadata = JSON.parse(await fs.readFile(path.join(testDirectory, 'fixtures', 'example.json'), 'utf-8'))
-
-  // Run the function
-  await addDataToImage(testImagePath, metadata)
-
-  // Verify the EXIF data
-  const readMetadata = await readDataFromImage(testImagePath)
-  assert.deepStrictEqual(readMetadata, metadata)
+  await runImageTest(t, 'example.webp')
 })
 
 test('write and read metadata for JPG files', async (t) => {
-  const testImageName = 'example.jpg'
-  const testDirectory = path.dirname(new URL(import.meta.url).pathname)
-  const sourceImagePath = path.join(testDirectory, 'fixtures', testImageName)
-  const testImagePath = path.join(testDirectory, `test_${testImageName}`)
-
-  await fs.copyFile(sourceImagePath, testImagePath)
-
-  // Cleanup after the test
-  t.after(async () => {
-    try {
-      await fs.unlink(testImagePath)
-    } catch (deleteError) {
-      console.error('Error deleting test image:', deleteError)
-    }
-  })
-
-  // Test metadata
-  const metadata = JSON.parse(await fs.readFile(path.join(testDirectory, 'fixtures', 'example.json'), 'utf-8'))
-
-  // Run the function
-  await addDataToImage(testImagePath, metadata)
-
-  // Verify the EXIF data
-  const readMetadata = await readDataFromImage(testImagePath)
-  assert.deepStrictEqual(readMetadata, metadata)
+  await runImageTest(t, 'example.jpg')
 })
