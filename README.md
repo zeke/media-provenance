@@ -31,6 +31,7 @@ Example metadata:
     "created_at": "2024-08-20T01:36:46.515000Z"
   }
 }
+```
 
 ## Why?
 
