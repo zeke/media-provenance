@@ -11,7 +11,7 @@ export async function set (fullyQualifiedImagePath, metadata) {
     const json = JSON.stringify(metadata, null, 2)
 
     await exiftool.write(fullyQualifiedImagePath, {
-      UserComment: json
+      MakerNote: json
     }, ['-overwrite_original_in_place'])
   } catch (exifError) {
     console.error('Error writing EXIF data:', exifError)
@@ -24,8 +24,8 @@ export async function get (fullyQualifiedImagePath) {
   const exiftool = new ExifTool()
   try {
     const exifData = await exiftool.read(fullyQualifiedImagePath)
-    if (exifData.UserComment) {
-      return JSON.parse(exifData.UserComment)
+    if (exifData.MakerNote) {
+      return JSON.parse(exifData.MakerNote)
     }
     return null
   } catch (exifError) {

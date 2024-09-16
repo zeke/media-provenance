@@ -18,6 +18,7 @@
     "node": ">=18"
   },
   "dependencies": {
+    "commander": "^12.1.0",
     "exiftool-vendored": "^28.2.1"
   },
   "devDependencies": {
