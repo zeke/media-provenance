@@ -1,8 +1,36 @@
 # MediaProvenance
 
-A Node.js module for storing (and retrieving) JSON metadata in image files.
+A specification, library, and CLI for describing the origins of AI-generated images.
+
+This package provides a JavaScript API and CLI for storing and retrieving metadata in image files, so creators can share the origins of their images with others.
 
 Supports PNG, JPG, and WebP image formats.
+
+Example metadata:
+
+```json
+{
+  "description": "MediaProvenance: A specification for describing the origins of AI-generated images. See https://github.com/zeke/media-provenance",
+  "version": "1.0.0",
+  "provider": "Replicate (https://replicate.com)",
+  "metadata": {
+    "id": "qfjk4jqdpdrm20chdnpscydpe4",
+    "model": "black-forest-labs/flux-schneell",
+    "version": "fe82ca7f3f7efe4ad452c49a31e20d18b31d498bddbc1d61860703e0339406ba",
+    "input": {
+      "prompt": "black forest gateau cake spelling out the words \"FLUX SCHNELL\", tasty, food photography, dynamic shot",
+      "num_outputs": 1,
+      "aspect_ratio": "1:1",
+      "output_format": "webp",
+      "output_quality": 80
+    },
+    "output": [
+      "https://replicate.delivery/yhqm/A8gbZlebANWBFSU1mTWSznUwZ0XGtflFAQ8DT35trPNvUaUTA/out-0.webp"
+    ],
+    "completed_at": "2024-08-20T01:36:47.839339Z",
+    "created_at": "2024-08-20T01:36:46.515000Z"
+  }
+}
 
 ## Why?
 
@@ -75,6 +103,31 @@ Set data:
 
 ```
 media-provenance set path/to/image.jpg path/to/metadata.json
+```
+
+This will output a JSON object like this:
+
+```json
+{
+  "description": "MediaProvenance: A specification for describing the origins of AI-generated images. See https://github.com/zeke/media-provenance",
+  "version": "1.0.0",
+  "provider": "Replicate (https://replicate.com)",
+  "metadata": {
+    "inputs": [
+      {
+        "model": "stability-ai/sdxl",
+        "prompt": "A beautiful landscape with a river and mountains",
+        "num_outputs": 3,
+        "seed": 42
+      }
+    ],
+    "outputs": [
+      "https://example.com/output-1.png",
+      "https://example.com/output-2.png",
+      "https://example.com/output-3.png"
+    ]
+  }
+}
 ```
 
 Get data:

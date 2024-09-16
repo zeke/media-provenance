@@ -1,0 +1,17 @@
+{
+  "input": {
+    "prompt": "black forest gateau cake spelling out the words \"FLUX SCHNELL\", tasty, food photography, dynamic shot",
+    "num_outputs": 1,
+    "aspect_ratio": "1:1",
+    "output_format": "webp",
+    "output_quality": 80
+  },
+  "output": [
+    "https://replicate.delivery/yhqm/A8gbZlebANWBFSU1mTWSznUwZ0XGtflFAQ8DT35trPNvUaUTA/out-0.webp"
+  ],
+  "model": "black-forest-labs/flux-schneell",
+  "id": "qfjk4jqdpdrm20chdnpscydpe4",
+  "version": "fe82ca7f3f7efe4ad452c49a31e20d18b31d498bddbc1d61860703e0339406ba",
+  "completed_at": "2024-08-20T01:36:47.839339Z",
+  "created_at": "2024-08-20T01:36:46.515000Z",
+}
