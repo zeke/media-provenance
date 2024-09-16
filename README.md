@@ -14,8 +14,10 @@ MediaProvenance is a simple way to store and retrieve metadata in image files, s
 
 You'll need [Node.js](https://nodejs.org/en/download/prebuilt-installer) 18 or later to use this module.
 
+It's not published to npm yet, but you can install it directly from GitHub:
+
 ```
-npm install media-provenance
+npm install zeke/media-provenance
 ```
 
 ## API
