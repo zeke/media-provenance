@@ -15,7 +15,7 @@ const metadataSchema = z.object({
   description: z.string(),
   version: z.string(),
   provider: z.string(),
-  metadata: z.record(z.unknown())
+  meta: z.record(z.unknown())
 })
 
 export default {
@@ -23,14 +23,14 @@ export default {
   set
 }
 
-export async function set (fullyQualifiedImagePath, metadata) {
+export async function set (fullyQualifiedImagePath, userMetadata) {
   const exiftool = new ExifTool()
   try {
     const provenanceData = {
       description: 'MediaProvenance: A specification for describing the origins of AI-generated images. See https://github.com/zeke/media-provenance',
       version: packageJson.version,
       provider: 'Replicate (https://replicate.com)',
-      metadata
+      meta: userMetadata
     }
 
     const validatedMetadata = metadataSchema.parse(provenanceData)

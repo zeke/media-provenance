@@ -28,13 +28,13 @@ async function runImageTest (t, testImageName) {
   })
 
   // Test metadata
-  const metadata = JSON.parse(await fs.readFile(path.join(testDirectory, 'fixtures', 'example.json'), 'utf-8'))
+  const userMetadata = JSON.parse(await fs.readFile(path.join(testDirectory, 'fixtures', 'example.json'), 'utf-8'))
 
   const expectedResult = {
     description: 'MediaProvenance: A specification for describing the origins of AI-generated images. See https://github.com/zeke/media-provenance',
     version: packageJson.version,
     provider: 'Replicate (https://replicate.com)',
-    metadata
+    meta: userMetadata
   }
 
   // Verify that the image does not include metadata before adding it
@@ -42,7 +42,7 @@ async function runImageTest (t, testImageName) {
   assert.deepStrictEqual(initialMetadata, null, 'Image should not contain metadata initially')
 
   // Run the function to add metadata
-  await MediaProvenance.set(testImagePath, metadata)
+  await MediaProvenance.set(testImagePath, userMetadata)
 
   // Verify the EXIF data after adding metadata
   const readMetadata = await MediaProvenance.get(testImagePath)
