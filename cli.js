@@ -5,7 +5,7 @@ import { get, set } from './index.js'
 import { existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 
-function usage() {
+function usage () {
   console.log(`
 Usage: media-provenance [<image>] <command>
 
@@ -18,9 +18,7 @@ If <image> is provided as the first argument without a command, it defaults to '
   process.exit()
 }
 
-const version = '1.0.0'
-
-async function main() {
+async function main () {
   const args = process.argv.slice(2)
 
   if (args.length === 0 || args.includes('-h') || args.includes('--help')) {
@@ -32,7 +30,6 @@ async function main() {
   }
 
   const command = args[0]
-
 
   const filePath = resolve(process.cwd(), command)
   if (existsSync(filePath)) {
@@ -52,7 +49,7 @@ async function main() {
       process.exit(1)
     }
   }
-  
+
   if (command === 'set') {
     if (args.length !== 3) {
       usage()
