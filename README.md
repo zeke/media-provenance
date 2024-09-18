@@ -4,12 +4,19 @@ A spec for describing the origins of AI-generated images.
 
 This project defines a specification for describing metadata about AI-generated images, and includes tooling for storing that metadata in image files.
 
-This package provides a JavaScript API and CLI for storing and retrieving metadata in image files, so creators can share the origins of their images with others.
+This npm package provides a **JavaScript API** and **command-line interface** for storing and retrieving metadata in image files, so creators can share the origins of their images with others.
 
 Supports PNG, JPG, and WebP image formats for now, but there's room to grow to other formats like video and audio.
 
+## Example 
 
-Example metadata:
+Run this on an image that's been annotated with provenance data:
+
+```
+npx media-provenance path/to/some/ai/generated/image.jpg
+```
+
+And you'll see output like this:
 
 ```json
 {
@@ -33,17 +40,29 @@ Example metadata:
 }
 ```
 
-## Installation
+Use [jq](https://jqlang.github.io/jq/) to pretty-print the JSON and dig into the data:
 
-You'll need [Node.js](https://nodejs.org/en/download/prebuilt-installer) 18 or later to use this module.
+```sh
+# show the whole thing
+npx media-provenance path/to/some/ai/generated/image.jpg | jq
 
-It's not published to npm yet, but you can install it directly from GitHub:
+# show the prompt used to generate the image
+npx media-provenance path/to/some/ai/generated/image.jpg | jq .input.prompt
+```
+
+## Prerequisites
+
+You'll need [Node.js](https://nodejs.org/en/download/prebuilt-installer) 18 or later to use this module, either in a Node.js script or as a CLI.
+
+## Usage (Node.js)
+
+Start by installing the package:
 
 ```
-npm install zeke/media-provenance
+npm install media-provenance
 ```
 
-## JavaScript API 
+Then there are two methods you can use: `get` and `set`.
 
 ### `set(imagePath, metadata)`
 
@@ -61,9 +80,22 @@ import MediaProvenance from 'media-provenance'
 
 const filePath = 'path/to/my/image.jpg'
 const data = {
-  "title": "My Image",
-  "description": "This is a test image",
-  "tags": ["test", "image"]
+  "provider": "Replicate (https://replicate.com)",
+  "model": "stability-ai/sdxl",
+  "input": {
+    "prompt": "A beautiful landscape with a river and mountains",
+    "num_outputs": 3,
+    "seed": 42
+  },
+  "output": [
+    "https://example.com/output-1.png",
+    "https://example.com/output-2.png",
+    "https://example.com/output-3.png"
+  ], 
+  "meta": {
+    "completed_at": "2024-08-20T01:36:47.839339Z",
+    "created_at": "2024-08-20T01:36:46.515000Z"
+  }
 }
 
 await MediaProvenance.set(filePath, data)
@@ -88,47 +120,28 @@ const data = await MediaProvenance.get(filePath)
 
 ## CLI (Command Line Interface)
 
-Install the CLI globally:
+To use this as a CLI, install it globally:
 
 ```
-npm install -g zeke/media-provenance
+npm install -g media-provenance
 ```
+
+The CLI installs itself with a few aliases. Pick the one you can remember best:
+
+- `media-provenance`
+- `provenance`
+- `mp`
 
 Set data:
 
 ```
-media-provenance set path/to/image.jpg path/to/metadata.json
-```
-
-This will output a JSON object like this:
-
-```json
-{
-  "description": "MediaProvenance: A spec for describing the origins of AI-generated images. See https://github.com/zeke/media-provenance",
-  "version": "1.0.0",
-  "provider": "Replicate (https://replicate.com)",
-  "model": "stability-ai/sdxl",
-  "input": {
-    "prompt": "A beautiful landscape with a river and mountains",
-    "num_outputs": 3,
-    "seed": 42
-  },
-  "output": [
-    "https://example.com/output-1.png",
-    "https://example.com/output-2.png",
-    "https://example.com/output-3.png"
-  ], 
-  "meta": {
-    "completed_at": "2024-08-20T01:36:47.839339Z",
-    "created_at": "2024-08-20T01:36:46.515000Z"
-  }
-}
+mp set path/to/image.jpg path/to/metadata.json
 ```
 
 Get data:
 
 ```
-media-provenance get path/to/image.jpg
+mp path/to/image.jpg
 ```
 
 ## Schema
