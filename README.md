@@ -107,20 +107,20 @@ This will output a JSON object like this:
   "description": "MediaProvenance: A spec for describing the origins of AI-generated images. See https://github.com/zeke/media-provenance",
   "version": "1.0.0",
   "provider": "Replicate (https://replicate.com)",
-  "metadata": {
-    "inputs": [
-      {
-        "model": "stability-ai/sdxl",
-        "prompt": "A beautiful landscape with a river and mountains",
-        "num_outputs": 3,
-        "seed": 42
-      }
-    ],
-    "outputs": [
-      "https://example.com/output-1.png",
-      "https://example.com/output-2.png",
-      "https://example.com/output-3.png"
-    ]
+  "model": "stability-ai/sdxl",
+  "input": {
+    "prompt": "A beautiful landscape with a river and mountains",
+    "num_outputs": 3,
+    "seed": 42
+  },
+  "output": [
+    "https://example.com/output-1.png",
+    "https://example.com/output-2.png",
+    "https://example.com/output-3.png"
+  ], 
+  "meta": {
+    "completed_at": "2024-08-20T01:36:47.839339Z",
+    "created_at": "2024-08-20T01:36:46.515000Z"
   }
 }
 ```
