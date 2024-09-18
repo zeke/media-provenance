@@ -1,5 +1,6 @@
 import { ExifTool } from 'exiftool-vendored'
 import { z } from 'zod'
+import dedent from 'dedent'
 
 // Do all this ceremony to get the package version
 import { readFile } from 'node:fs/promises'
@@ -10,30 +11,31 @@ const __dirname = dirname(__filename)
 const packageJsonPath = join(__dirname, 'package.json')
 const packageJson = JSON.parse(await readFile(packageJsonPath, 'utf-8'))
 
-// Define the MediaProvenance schema
-const metadataSchema = z.object({
-  description: z.string(),
-  version: z.string(),
-  provider: z.string(),
-  meta: z.record(z.unknown())
+export const schema = z.object({
+  description: z.string().describe('An explanatory blurb about the MediaProvenance spec itself. This is set automatically by tools.'),
+  provider: z.string().describe('The app or service that ran the model.'),
+  model: z.string().describe('The model used to generate the image'),
+  input: z.record(z.any()).describe('The input parameters to the model'),
+  output: z.any().describe('The output of the model'),
+  meta: z.record(z.unknown()).describe('Extra metadata')
 })
 
 export default {
   get,
-  set
+  set,
+  schema
 }
 
-export async function set (fullyQualifiedImagePath, userMetadata) {
+export async function set (fullyQualifiedImagePath, provenanceData) {
   const exiftool = new ExifTool()
   try {
-    const provenanceData = {
-      description: 'MediaProvenance: A specification for describing the origins of AI-generated images. See https://github.com/zeke/media-provenance',
-      version: packageJson.version,
-      provider: 'Replicate (https://replicate.com)',
-      meta: userMetadata
-    }
+    const description = dedent`
+      MediaProvenance (v${packageJson.version}): A spec for describing the origins of AI-generated images.
+      See https://github.com/zeke/media-provenance
+    `
+    const provenanceDataWithDescription = { description, ...provenanceData }
 
-    const validatedMetadata = metadataSchema.parse(provenanceData)
+    const validatedMetadata = schema.parse(provenanceDataWithDescription)
 
     const json = JSON.stringify(validatedMetadata, null, 2)
 
