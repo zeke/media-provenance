@@ -1,3 +1,5 @@
+![media-provenance](https://github.com/user-attachments/assets/a9e555c3-b972-42ab-a2e6-ea2fa5e47cc8)
+
 # MediaProvenance
 
 A spec for describing the origins of AI-generated images.
