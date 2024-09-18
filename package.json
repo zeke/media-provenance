@@ -1,6 +1,6 @@
 {
   "name": "media-provenance",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A spec, library, and CLI for describing the origins of AI-generated images.",
   "main": "index.js",
   "bin": {
