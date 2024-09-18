@@ -62,9 +62,6 @@ async function main () {
       console.error('Error:', error.message)
       process.exit(1)
     }
-  } else {
-    console.error(`Unknown command: ${command}`)
-    usage()
   }
 }
 
