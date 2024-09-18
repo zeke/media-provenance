@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/zeke/media-provenance/compare/v1.0.1...v1.0.2) (2024-09-18)
+
+
+### Bug Fixes
+
+* readme moar ([#9](https://github.com/zeke/media-provenance/issues/9)) ([af86717](https://github.com/zeke/media-provenance/commit/af86717493b953dd5a51d861870848afa0bed7fc))
+
 ## [1.0.1](https://github.com/zeke/media-provenance/compare/v1.0.0...v1.0.1) (2024-09-18)
 
 
