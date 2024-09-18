@@ -12,32 +12,36 @@ Supports PNG, JPG, and WebP image formats for now, but there's room to grow to o
 
 ## Example 
 
-Run this on an image that's been annotated with provenance data:
+Run this on an image that's been annotated with provenance data (like the example image at the top of this README):
 
 ```
-npx media-provenance path/to/some/ai/generated/image.jpg
+npx media-provenance https://github.com/user-attachments/assets/a9e555c3-b972-42ab-a2e6-ea2fa5e47cc8
 ```
 
 And you'll see output like this:
 
 ```json
 {
-  "description": "MediaProvenance (v1.0.0): A spec for describing the origins of AI-generated images. See https://github.com/zeke/media-provenance",
-  "provider": "Replicate (https://replicate.com)",
-  "model": "black-forest-labs/flux-schneell",
+  "description": "MediaProvenance (v1.0.2): A spec for describing the origins of AI-generated images.\nSee https://github.com/zeke/media-provenance",
+  "provider": "Replicate (https://replicate.com/)",
+  "model": "apolinario/flux-tarot-v1",
   "input": {
-    "prompt": "black forest gateau cake spelling out the words FLUX SCHNELL, tasty, food photography, dynamic shot",
-    "num_outputs": 1,
-    "aspect_ratio": "1:1",
-    "output_format": "webp",
-    "output_quality": 80
+    "aspect_ratio": "16:9",
+    "output_format": "jpg",
+    "prompt": "a woman at a drafting table closely inspecting a detailed and colorful printed image with a magnifying glass, the words \"Media Provenance\" in large letters above, in the style of TOK a trtcrd, tarot style",
+    "replicate_weights": "https://replicate.delivery/yhqm/P0f0U8kSZX3WPyee7NQHScd7S3IwjvC2tWKfiKG7nIOQdXONB/trained_model.tar"
   },
   "output": [
-    "https://replicate.delivery/yhqm/A8gbZlebANWBFSU1mTWSznUwZ0XGtflFAQ8DT35trPNvUaUTA/out-0.webp"
+    "https://replicate.delivery/yhqm/B0ftAmvmkX1yNqgOdxdJ0fvTNwMxUKVegpSVlnmC4dbvXE8mA/out-0.jpg"
   ],
   "meta": {
-    "completed_at": "2024-08-20T01:36:47.839339Z",
-    "created_at": "2024-08-20T01:36:46.515000Z"
+    "id": "9cw1f0gcznrm20cj0f481wrg4g",
+    "version": "6c4ebdf049df552f8c02b3a7bbb3afec3d37b20924282bab8744f1168b6de470",
+    "status": "succeeded",
+    "created_at": "2024-09-18T06:18:15.165Z",
+    "metrics": {
+      "predict_time": 2.952753868
+    }
   }
 }
 ```
@@ -134,16 +138,23 @@ The CLI installs itself with a few aliases. Pick the one you can remember best:
 - `provenance`
 - `mp`
 
+
+Get data from a local file:
+
+```
+mp path/to/image.jpg
+```
+
+Get data from a URL:
+
+```
+mp https://github.com/user-attachments/assets/a9e555c3-b972-42ab-a2e6-ea2fa5e47cc8 | jq
+```
+
 Set data:
 
 ```
 mp set path/to/image.jpg path/to/metadata.json
-```
-
-Get data:
-
-```
-mp path/to/image.jpg
 ```
 
 ## Schema
