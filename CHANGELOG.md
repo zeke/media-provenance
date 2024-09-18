@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/zeke/media-provenance/compare/v1.0.2...v1.1.0) (2024-09-18)
+
+
+### Features
+
+* update CLI to support URLs as input ([#11](https://github.com/zeke/media-provenance/issues/11)) ([bd660d8](https://github.com/zeke/media-provenance/commit/bd660d83fecc8e94b4dfecc40493942d08aea25d))
+
 ## [1.0.2](https://github.com/zeke/media-provenance/compare/v1.0.1...v1.0.2) (2024-09-18)
 
 
