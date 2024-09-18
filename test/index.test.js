@@ -1,5 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
+import dedent from 'dedent'
 import fs, { readFile } from 'node:fs/promises'
 import path, { dirname, join } from 'node:path'
 import MediaProvenance from '../index.js'
@@ -18,7 +19,7 @@ async function runImageTest (t, testImageName) {
 
   await fs.copyFile(sourceImagePath, testImagePath)
 
-  // Cleanup after the test
+  // Delete temp files after each test
   t.after(async () => {
     try {
       await fs.unlink(testImagePath)
@@ -27,26 +28,42 @@ async function runImageTest (t, testImageName) {
     }
   })
 
-  // Test metadata
-  const userMetadata = JSON.parse(await fs.readFile(path.join(testDirectory, 'fixtures', 'example.json'), 'utf-8'))
+  const provider = 'Replicate (https://replicate.com)'
+  const rawReplicatePredictionData = JSON.parse(await fs.readFile(path.join(testDirectory, 'fixtures', 'example.json'), 'utf-8'))
+  const { model, input, output, ...meta } = rawReplicatePredictionData
 
   const expectedResult = {
-    description: 'MediaProvenance: A specification for describing the origins of AI-generated images. See https://github.com/zeke/media-provenance',
-    version: packageJson.version,
-    provider: 'Replicate (https://replicate.com)',
-    meta: userMetadata
+    description: dedent`
+      MediaProvenance (v${packageJson.version}): A spec for describing the origins of AI-generated images.
+      See https://github.com/zeke/media-provenance
+    `,
+    provider,
+    model,
+    input,
+    output,
+    meta
   }
 
   // Verify that the image does not include metadata before adding it
   const initialMetadata = await MediaProvenance.get(testImagePath)
   assert.deepStrictEqual(initialMetadata, null, 'Image should not contain metadata initially')
 
-  // Run the function to add metadata
-  await MediaProvenance.set(testImagePath, userMetadata)
+  // Add data to image
+  await MediaProvenance.set(testImagePath, {
+    provider,
+    model,
+    input,
+    output,
+    meta
+  })
 
-  // Verify the EXIF data after adding metadata
+  // Verify the data was addeed
   const readMetadata = await MediaProvenance.get(testImagePath)
-  assert.deepStrictEqual(readMetadata, expectedResult, 'Added metadata should match the original metadata')
+  assert.deepStrictEqual(
+    JSON.parse(JSON.stringify(readMetadata)),
+    JSON.parse(JSON.stringify(expectedResult)),
+    'Added metadata should match the original metadata (ignoring key order)'
+  )
 }
 
 test('write and read metadata for PNG files', async (t) => {

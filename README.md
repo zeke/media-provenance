@@ -1,6 +1,6 @@
 # MediaProvenance
 
-A specification, library, and CLI for describing the origins of AI-generated images.
+A spec, library, and CLI for describing the origins of AI-generated images.
 
 This package provides a JavaScript API and CLI for storing and retrieving metadata in image files, so creators can share the origins of their images with others.
 
@@ -10,7 +10,7 @@ Example metadata:
 
 ```json
 {
-  "description": "MediaProvenance: A specification for describing the origins of AI-generated images. See https://github.com/zeke/media-provenance",
+  "description": "MediaProvenance: A spec for describing the origins of AI-generated images. See https://github.com/zeke/media-provenance",
   "version": "1.0.0",
   "provider": "Replicate (https://replicate.com)",
   "metadata": {
@@ -110,7 +110,7 @@ This will output a JSON object like this:
 
 ```json
 {
-  "description": "MediaProvenance: A specification for describing the origins of AI-generated images. See https://github.com/zeke/media-provenance",
+  "description": "MediaProvenance: A spec for describing the origins of AI-generated images. See https://github.com/zeke/media-provenance",
   "version": "1.0.0",
   "provider": "Replicate (https://replicate.com)",
   "metadata": {

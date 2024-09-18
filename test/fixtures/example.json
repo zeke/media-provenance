@@ -3,6 +3,7 @@
   "created_at": "2024-09-12T15:54:18.853000Z",
   "data_removed": false,
   "error": null,
+  "model": "black-forest-labs/flux-schnell",
   "id": "4macer2bcnrm60chwvrstawdc4",
   "input": {
     "prompt": "\"A lush, vibrant solarium filled with an assortment of exotic plants, warm sunlight streaming through the windows, and a lively menagerie of cats lounging on velvet cushions, colorful birds perched on ornate aviaries, and a few furry rabbits hopping across the floor, amidst a scattering of plush throw pillows and wicker furniture, with a stunning glass ceiling above, allowing a brilliant blue sky to peek through.\"",
@@ -10,7 +11,6 @@
     "output_format": "webp",
     "output_quality": 90
   },
-  "logs": "Using seed: 51022\n0it [00:00, ?it/s]\n1it [00:00,  8.03it/s]\n2it [00:00,  5.65it/s]\n3it [00:00,  5.15it/s]\n4it [00:00,  4.94it/s]\n4it [00:00,  5.21it/s]\nTotal safe images: 1 out of 1",
   "metrics": {
     "image_count": 1,
     "predict_time": 1.194428969,

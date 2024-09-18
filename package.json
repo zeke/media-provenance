@@ -1,7 +1,7 @@
 {
   "name": "media-provenance",
   "version": "1.0.0",
-  "description": "A specification, library, and CLI for describing the origins of AI-generated images.",
+  "description": "A spec, library, and CLI for describing the origins of AI-generated images.",
   "main": "index.js",
   "scripts": {
     "test": "standard --fix && node --test test/*.test.js",
@@ -19,8 +19,10 @@
   },
   "dependencies": {
     "commander": "^12.1.0",
+    "dedent": "^1.5.3",
     "exiftool-vendored": "^28.2.1",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zod-to-json-schema": "^3.23.3"
   },
   "devDependencies": {
     "standard": "^17.1.1"
