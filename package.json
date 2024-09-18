@@ -28,7 +28,9 @@
   "dependencies": {
     "commander": "^12.1.0",
     "dedent": "^1.5.3",
+    "download": "^8.0.0",
     "exiftool-vendored": "^28.2.1",
+    "is-url": "^1.2.4",
     "zod": "^3.23.8",
     "zod-to-json-schema": "^3.23.3"
   },

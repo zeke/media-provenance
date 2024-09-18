@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
-import { readFile } from 'node:fs/promises'
+import { readFile, unlink } from 'node:fs/promises'
 import { get, set } from './index.js'
 import { existsSync } from 'node:fs'
-import { resolve } from 'node:path'
+import { resolve, join } from 'node:path'
+import { tmpdir } from 'node:os'
+import isUrl from 'is-url'
+import download from 'download'
 
 function usage () {
   console.log(`
@@ -30,6 +33,27 @@ async function main () {
   }
 
   const command = args[0]
+
+  if (isUrl(command)) {
+    const tmpDir = tmpdir()
+    const tmpFile = join(tmpDir, 'downloaded-image.jpg') // Add file extension
+    try {
+      await download(command, tmpDir, { filename: 'downloaded-image.jpg' }) // Add file extension
+      const data = await get(tmpFile)
+      console.log(JSON.stringify(data, null, 2))
+    } catch (error) {
+      console.error('Error:', error.message)
+      process.exit(1)
+    } finally {
+      // Clean up the temporary file
+      try {
+        await unlink(tmpFile)
+      } catch (cleanupError) {
+        console.error('Error cleaning up temporary file:', cleanupError.message)
+      }
+    }
+    return
+  }
 
   const filePath = resolve(process.cwd(), command)
   if (existsSync(filePath)) {
