@@ -46,14 +46,18 @@ And you'll see output like this:
 }
 ```
 
-Use [jq](https://jqlang.github.io/jq/) to pretty-print the JSON and dig into the data:
+You can use [jq](https://jqlang.github.io/jq/) to pretty-print the JSON and dig into the data:
 
 ```sh
 # show the whole thing
-npx media-provenance path/to/some/ai/generated/image.jpg | jq
+url="https://github.com/user-attachments/assets/a9e555c3-b972-42ab-a2e6-ea2fa5e47cc8"
+npx media-provenance $url | jq
 
-# show the prompt used to generate the image
-npx media-provenance path/to/some/ai/generated/image.jpg | jq .input.prompt
+# show just the inputs
+npx media-provenance $url | jq .input
+
+# show just the prompt
+npx media-provenance $url | jq .input.prompt
 ```
 
 ## Prerequisites
