@@ -6,13 +6,12 @@ import dedent from 'dedent'
 import { readFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
-import zodToJsonSchema from 'zod-to-json-schema'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const packageJsonPath = join(__dirname, 'package.json')
 const packageJson = JSON.parse(await readFile(packageJsonPath, 'utf-8'))
 
-const schema = z.object({
+export const schema = z.object({
   description: z.string().describe('An explanatory blurb about the MediaProvenance spec itself. This is set automatically by tools.'),
   provider: z.string().describe('The app or service that ran the model.'),
   model: z.string().describe('The model used to generate the image'),
@@ -20,8 +19,6 @@ const schema = z.object({
   output: z.any().describe('The output of the model'),
   meta: z.record(z.unknown()).describe('Extra metadata')
 })
-
-console.log(JSON.stringify(zodToJsonSchema(schema, 'MediaProvenance'), null, 2))
 
 export default {
   get,

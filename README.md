@@ -1,43 +1,37 @@
 # MediaProvenance
 
-A spec, library, and CLI for describing the origins of AI-generated images.
+A spec for describing the origins of AI-generated images.
+
+This project defines a specification for describing metadata about AI-generated images, and includes tooling for storing that metadata in image files.
 
 This package provides a JavaScript API and CLI for storing and retrieving metadata in image files, so creators can share the origins of their images with others.
 
-Supports PNG, JPG, and WebP image formats.
+Supports PNG, JPG, and WebP image formats for now, but there's room to grow to other formats like video and audio.
+
 
 Example metadata:
 
 ```json
 {
-  "description": "MediaProvenance: A spec for describing the origins of AI-generated images. See https://github.com/zeke/media-provenance",
-  "version": "1.0.0",
+  "description": "MediaProvenance (v1.0.0): A spec for describing the origins of AI-generated images. See https://github.com/zeke/media-provenance",
   "provider": "Replicate (https://replicate.com)",
-  "metadata": {
-    "id": "qfjk4jqdpdrm20chdnpscydpe4",
-    "model": "black-forest-labs/flux-schneell",
-    "version": "fe82ca7f3f7efe4ad452c49a31e20d18b31d498bddbc1d61860703e0339406ba",
-    "input": {
-      "prompt": "black forest gateau cake spelling out the words \"FLUX SCHNELL\", tasty, food photography, dynamic shot",
-      "num_outputs": 1,
-      "aspect_ratio": "1:1",
-      "output_format": "webp",
-      "output_quality": 80
-    },
-    "output": [
-      "https://replicate.delivery/yhqm/A8gbZlebANWBFSU1mTWSznUwZ0XGtflFAQ8DT35trPNvUaUTA/out-0.webp"
-    ],
+  "model": "black-forest-labs/flux-schneell",
+  "input": {
+    "prompt": "black forest gateau cake spelling out the words FLUX SCHNELL, tasty, food photography, dynamic shot",
+    "num_outputs": 1,
+    "aspect_ratio": "1:1",
+    "output_format": "webp",
+    "output_quality": 80
+  },
+  "output": [
+    "https://replicate.delivery/yhqm/A8gbZlebANWBFSU1mTWSznUwZ0XGtflFAQ8DT35trPNvUaUTA/out-0.webp"
+  ],
+  "meta": {
     "completed_at": "2024-08-20T01:36:47.839339Z",
     "created_at": "2024-08-20T01:36:46.515000Z"
   }
 }
 ```
-
-## Why?
-
-Ever come across an AI-generated image and wondered about its origins?
-
-MediaProvenance is a simple way to store and retrieve metadata in image files, so creators can share the origins of their images with others.
 
 ## Installation
 
@@ -137,11 +131,64 @@ Get data:
 media-provenance get path/to/image.jpg
 ```
 
+## Schema
+
+This is the JSON schema for the MediaProvenance format:
+
+<!--BEGIN SCHEMA-->
+```json
+{
+  "$ref": "#/definitions/MediaProvenance",
+  "definitions": {
+    "MediaProvenance": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "An explanatory blurb about the MediaProvenance spec itself. This is set automatically by tools."
+        },
+        "provider": {
+          "type": "string",
+          "description": "The app or service that ran the model."
+        },
+        "model": {
+          "type": "string",
+          "description": "The model used to generate the image"
+        },
+        "input": {
+          "type": "object",
+          "additionalProperties": {},
+          "description": "The input parameters to the model"
+        },
+        "output": {
+          "description": "The output of the model"
+        },
+        "meta": {
+          "type": "object",
+          "additionalProperties": {},
+          "description": "Extra metadata"
+        }
+      },
+      "required": [
+        "description",
+        "provider",
+        "model",
+        "input",
+        "meta"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
+```
+<!--END SCHEMA-->
+
 ## Notes
 
 - Data is stored using [EXIF](https://en.wikipedia.org/wiki/Exif), a popular image format metadata format.
 - Data is stored as a JSON string in the [`MakerNote`](https://exiftool.org/idiosyncracies.html) field, which is one of the few EXIF fields that allows for arbitrary data.
-- Data _could_ be stored using `XMP`, an alternative to EXIF created by Adobe that supports more formats.
+- Data _could_ be stored using `XMP`, an alternative to EXIF created by Adobe that supports more formats. Avoided that for now because it's XML. :[
 
 ## Tips
 

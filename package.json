@@ -3,9 +3,17 @@
   "version": "1.0.0",
   "description": "A spec, library, and CLI for describing the origins of AI-generated images.",
   "main": "index.js",
+  "bin": {
+    "media-provenance": "./cli.js",
+    "provenance": "./cli.js",
+    "prove": "./cli.js",
+    "prov": "./cli.js",
+    "mp": "./cli.js"
+  },
   "scripts": {
-    "test": "standard --fix && node --test test/*.test.js",
-    "lint": "standard --fix"
+    "test": "standard --fix && npm run build && node --test test/*.test.js",
+    "lint": "standard --fix",
+    "build": "node script/build.js"
   },
   "repository": "https://github.com/zeke/media-provenance",
   "keywords": [
