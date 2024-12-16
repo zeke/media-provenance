@@ -1,5 +1,9 @@
 ![media-provenance](https://github.com/user-attachments/assets/a9e555c3-b972-42ab-a2e6-ea2fa5e47cc8)
 
+> ✋ Update, December 2024: There's a more feature-complete and corporate-sponsored implementation of this idea called **Content Provenance and Authenticity (C2PA) **. You should probably use that instead. See https://opensource.contentauthenticity.org/docs/introduction
+
+----
+
 # MediaProvenance
 
 A spec for describing the origins of AI-generated images.
